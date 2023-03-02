@@ -1,0 +1,53 @@
+{% load static %}
+
+<html lang="en">
+
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet preload" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modal.css' %}">
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'css/sortable.css' %}">-->
+    <script src="{% static 'js/sortable.js' %}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.0.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gideon+Roman&display=swap" rel="stylesheet">
+    <!--<link rel="shortcut icon" type="image/png" href="{% static 'images/task_favicon.png' %}"/>-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text&display=swap" rel="stylesheet">
+
+    </script>
+
+    <script src="https://kit.fontawesome.com/3bf59f7a4a.js" crossorigin="anonymous"></script>
+
+    {% block css %}
+    {% endblock %}
+
+    {% block title %}
+        <title>Bar Code</title>
+    {% endblock %}
+</head>
+
+    <body>
+    <header class="container header">
+
+        {% block header %}
+        {% endblock %}
+
+    </header>
+
+    <div id="cloud_image">
+        <div class="unified-products_bg cases-mod_section-bg" style="background-image:url('https://www.simple-kit.ru/img/bg/spot/24.png')"></div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+
+</html>

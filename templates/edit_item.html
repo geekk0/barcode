@@ -1,0 +1,205 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+    {% block content %}
+        <div class="col-10 offset-1">
+            <div class="main_menu " style="" id="main_menu">
+                <div class="row">
+                    <ul class="" style="text-align: center;">
+                        <li class="col-2"><a style="font-weight: bold" href="#"><img style="margin-bottom: 5%; color: black;" src="{% static 'images/st.jpg' %}"><span id="logo_text">Simple.Bar</span></a></li>
+                        <li class="col-1"><a href="#" style="color:rgb(255, 152, 0);
+                        border: 1px solid rgb(255, 152, 0); border-radius:5px; padding: 10%; width: 100%" >Заказы</a></li>
+                        <li class="col-1 selected_menu"><a href="{% url 'Меню' %}" style="color:rgb(77, 208, 225);
+                        border: 1px solid rgb(77, 208, 225); border-radius:5px; padding: 10%; width: 100%">Меню</a></li>
+                        <li class="col-1 offset-2"><a href="{% url 'Выход' %}"  class="">Выйти</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="cloud_image"></div>
+
+
+            <div class="container">
+                <div class="col-10 offset-1" style="text-align: center; margin-top:2%">
+                    <h3 style="font-weight: bold">Добавить в меню</h3>
+                    <form action="{% url 'Обновить' item.id %}" method="post" id="new_item_form" enctype="multipart/form-data" class="col-8 offset-2" style="margin-top: 3%">
+                        {% csrf_token %}
+                        <input type="text" value="{{ item.name }}" name="name" required><br>
+                        <label class="col-6" for="ingredients">Состав:</label>
+                        <textarea style="margin-top: 4%; border: 1px solid rgb(127, 132, 130); min-height: 150px"
+                                  class="col-6" name="ingredients" required>{{ item.ingredients }}</textarea><br>
+                        <label for="photo">Заменить фото</label>&nbsp
+                        <input type="file" name="photo" id="photo" class="" ><br>
+                        <img src="{{ item.photo.url }}" style="margin-top: 4%">
+                        <div class="row" style="margin-top: 3%">
+                            <span id="output"></span>
+                        </div>
+                        <div class="row col-6 offset-3" style="margin-top: 3%">
+                            <label class="col-3 offset-1" for="volume">Объем:</label>
+                            <input class="col-7" maxlength=10 required style="margin-top: 2%" type="text" name="volume" value="{{ item.volume }}">
+                        </div><br>
+
+                        <div class="col-4 offset-4">
+                            <p class="btn btn-outline-dark common_btn" onclick="add_ingredient()">Добавить ингредиент</p>
+                        </div><br>
+
+                        <table class="group_table col-8 offset-2 sortable" id="ings" style="margin-top: 2%">
+                            <thead style="background: none">
+                                <tr style="font-weight: bold">
+                                    <th class="col-2" style="text-align: center">№</th>
+                                    <th class="col-5" style="text-align: center">Название ингредиента</th>
+                                    <th class="col-2" style="text-align: center"></th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                {% for extra in extras %}
+                                    <tr id="ingredient">
+                                    <td class="col-2" id="number">{{ extra.list_number }}</td>
+                                    <td class="col-5" id="name" onclick="show_input(this)"><input type="text" name="input_{{ extra.list_number }}" value="{{ extra.name }}"></td>
+                                    <td class="col-2" style="color: red" onclick="remove_ingredient(this)">X</td>
+                                </tr>
+                                {% endfor %}
+                                <tr id="ingredient" style="display:none">
+                                    <td class="col-2" id="number">1</td>
+                                    <td class="col-5" id="name" onclick="show_input(this)"></td>
+                                    <td class="col-2" style="color: red" onclick="remove_ingredient(this)">X</td>
+                                </tr>
+                            </tbody>
+                         </table>
+
+                        <div class="col-4 offset-4" style="margin-top: 5%">
+                            <button type="submit" class="btn btn-outline-dark common_btn">Сохранить</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+                onscroll = (event) => {
+                    let main_menu = document.getElementById('main_menu')
+                    if (window.scrollY > main_menu.scrollHeight) {
+                        main_menu.classList.add('scrolled_menu')
+                    }
+
+                    if (window.scrollY === 0) {
+                        main_menu.classList.remove('scrolled_menu')
+                    }
+                };
+
+                check_values()
+
+                function handleFileSelect(evt) {
+                    let file = evt.target.files; // FileList object
+                    let f = file[0];
+                    // Only process image files.
+                    if (!f.type.match('image.*')) {
+                        alert("Image only please....");
+                    }
+                    let reader = new FileReader();
+                    // Closure to capture the file information.
+                    reader.onload = (function(theFile) {
+                        return function(e) {
+                            // Render thumbnail.
+                            var span = document.createElement('span');
+                            span.innerHTML = ['<img class="thumb" title="', escape(theFile.name), '" src="', e.target.result, '" />'].join('');
+                            document.getElementById('output').insertBefore(span, null);
+                        };
+                    })(f);
+                    // Read in the image file as a data URL.
+                    reader.readAsDataURL(f);
+                }
+                document.getElementById('photo').addEventListener('change', handleFileSelect, false);
+
+                function add_ingredient() {
+
+
+
+                    let ing = document.getElementById("ingredient")
+
+
+                    let parent = ing.parentElement
+                    let clone = ing.cloneNode(true)
+
+                    parent.appendChild(clone);
+
+                    if (parent.hasAttribute('cloned')) {
+                        let ing_count = parent.getAttribute('cloned')
+
+                        if (ing_count < 4) {
+
+                            clone.querySelector('#name').innerHTML = ""
+                            parent.setAttribute('cloned', (parseInt(ing_count) + 1).toString())
+                            clone.querySelector('#number').innerHTML = (parseInt(ing_count) + 1).toString()
+                            clone.querySelector('#name').removeAttribute('input')
+                        }
+                        else {
+                            clone.remove()
+                            return false;
+                        }
+                    }
+                    else {
+                        parent.setAttribute('cloned', '2')
+                        clone.querySelector('#number').innerHTML = '2'
+                        clone.querySelector('#name').innerHTML = ""
+                        clone.querySelector('#name').removeAttribute('input')
+
+                    }
+
+                }
+
+                function remove_ingredient(e) {
+                    let parent = e.parentElement
+                    let cloned_value = parseInt(parent.parentElement.getAttribute('cloned'))
+                    if (parseInt(parent.querySelector("#number").innerHTML) < cloned_value) {
+                        reset_numbers(parseInt(parent.querySelector("#number").innerHTML))
+                    }
+                    parent.remove()
+                    let ing = document.getElementById("ingredient")
+                    let body = ing.parentElement
+                    body.setAttribute('cloned', (parseInt(body.getAttribute('cloned')) - 1).toString() )
+
+
+                }
+
+                function show_input(e){
+                    let number = e.parentElement.querySelector('#number').innerHTML
+                    if (! e.hasAttribute('input')) {
+                        let input = document.createElement("input");
+                        input.type = "text";
+                        input.className = "";
+                        input.name = "input_" + number
+                        e.appendChild(input); // put it into the DOM
+                        input.focus()
+                        e.setAttribute('input', 'true')
+                    }
+                }
+
+                function check_values(){
+                    let ings = document.querySelectorAll('#ingredient')
+                    let cloned_value = (ings.length - 1).toString()
+                    let body = ings[0].parentElement
+                    body.setAttribute('cloned', cloned_value)
+                }
+
+                function check_numbers(){
+
+                }
+
+                function reset_numbers(deleting_number) {
+                    let ings = document.querySelectorAll('#ingredient')
+                    console.log(ings.length[2])
+                    for ( let i = 0; i < ings.length; i++) {
+                        let number = ings[i].querySelector('#number')
+                        if (parseInt(number.innerHTML) > deleting_number){
+                             number.innerHTML = (parseInt(number.innerHTML) - 1).toString()
+                             number.parentElement.querySelector('input').name = "input_" + number.innerHTML
+                        }
+                    }
+                }
+            </script>
+    {% endblock %}
