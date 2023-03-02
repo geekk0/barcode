@@ -1,0 +1,129 @@
+body {
+  overflow-x: hidden;
+}
+
+.main_menu {
+  margin-top: 3%;
+  transition: all 0.4s ease;
+  z-index: 20;
+}
+
+.main_menu ul li {
+  display: inline-block;
+  text-align: center;
+}
+
+.main_menu ul li a {
+  color: #323232;
+  text-decoration: none;
+  font-size: 13pt;
+  text-align: start;
+  font-family: "Montserrat",Arial,Verdana,Tahoma,sans-serif;
+}
+
+.main_menu ul li a:hover {
+  color: rgb(77, 208, 225);
+}
+
+.scrolled_menu {
+  position: fixed;
+  left: 15%;
+  top:  0;
+  width: 68.5%;
+  margin-top: 0;
+  background: white;
+  box-shadow: 0 4px 4px -1px rgba(0,0,0,0.5);
+  transition: all 0.4s ease;
+}
+
+.scrolled_menu ul {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.unified-products_bg {
+  content: "";
+  display: block;
+  width: 600px;
+  height: 500px;
+  background: url("https://www.simple-kit.ru/templates/simple/css/../img/bg/spot/07.png") no-repeat left top;
+  background-size: auto;
+  background-size: contain;
+  position: absolute;
+  top: -6em;
+  right: -3em;
+  z-index: -1;
+  transform-origin: 57% 39%;
+  animation: spin 15s linear infinite;
+  opacity: 0.7;
+  left: 45%;
+  top: 4%;
+
+}
+
+ .common_btn {
+   background-color: rgb(77, 208, 225);
+   border: none; border-radius: 20px;
+   padding-left: 10%;
+   padding-right: 10%;
+   width:100%;
+ }
+ 
+ .common_btn:hover {
+   background-color: rgb(30, 143, 161) !important;
+   color: white !important;
+ }
+
+.photo_wrapper {
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgb(127, 132, 130);
+  height: 250px;
+}
+
+.photo_wrapper img {
+  width: 120%;
+  height: 120%;
+  object-fit: cover;
+  margin-left: -10%;
+}
+
+#new_item_form input{
+  border: none;
+  text-align: center;
+  font-size: 15pt;
+  background: none;
+}
+
+#new_item_form input:focus {
+  outline: none;
+}
+
+#new_item_form textarea:focus {
+    outline: none;
+
+}
+
+#new_item_form textarea {
+    border-radius: 10px;
+}
+
+#new_item_form label {
+  font-size: 14pt;
+  font-weight: bold;
+  margin-top: 3%
+}
+
+#ings th {
+  border: 1px solid rgb(127, 132, 130);
+}
+
+#ings td {
+  text-align: center;
+  border: 1px solid rgb(127, 132, 130);
+}
+
+
+
+
+
