@@ -35,14 +35,16 @@
                 {% for item in items %}
                     <div class="col-4 item_border" style="padding: 1%; ">
                         <div class="item_tile" style="border: 1px solid rgb(127, 132, 130); border-radius: 15px; padding: 4%">
+
                             <div class="row">
                                 <div class="col-12" style="display: inline">
                                     <div class="row">
+                                        <p id="item_id" style="display: none">{{ item.id }}</p>
                                         <p class="col-10" style="text-align: center; font-weight: bold; font-size: 13pt">{{ item.name }}</p>
                                             {% if item.available %}
-                                                <input class="col-1" style="margin-bottom:6%"checked="" type="checkbox">
+                                                <input class="col-1" onclick="test(this)" style="margin-bottom:6%"checked="" type="checkbox">
                                             {% else %}
-                                                <input class="col-1" style="margin-bottom:6%" type="checkbox">
+                                                <input class="col-1" onclick="test(this)" style="margin-bottom:6%" type="checkbox">
                                             {% endif %}
                                     </div>
                                 </div>
@@ -68,6 +70,18 @@
                 main_menu.classList.remove('scrolled_menu')
             }
         };
+
+        function test(e) {
+            console.log(e.checked)
+            let item_id = e.parentElement.querySelector("#item_id").innerHTML
+            if (e.checked) {
+                window.location= "/Изменить доступность/item_id/status".replace('item_id', item_id).replace('status', 'True')
+            }
+            else {
+                window.location= "/Изменить доступность/item_id/status".replace('item_id', item_id).replace('status', 'False')
+            }
+
+        }
     </script>
 
 

@@ -148,3 +148,15 @@ def edit_item(request, item_id):
     extras = item.extras.order_by("list_number")
 
     return render(request, "edit_item.html", {"item": item, "extras": extras})
+
+
+@login_required()
+def change_status(request, item_id, status):
+    item_object = ItemCard.objects.get(id=item_id)
+    if status == "True":
+        item_object.available = True
+    else:
+        item_object.available = False
+    item_object.save()
+
+    return HttpResponseRedirect('/Меню')
