@@ -12,7 +12,8 @@ urlpatterns = [
     path("Сохранить", views.save_item, name="Сохранить"),
     path("Смотреть/<int:item_id>", views.edit_item, name="Смотреть"),
     path("Обновить/<int:item_id>", views.update_item, name="Обновить"),
-    path("Изменить доступность/<int:item_id>/<str:status>", views.change_status, name="Изменить доступность")
+    path("Изменить доступность/<int:item_id>/<str:status>", views.change_status, name="Изменить доступность"),
+    path("Удалить/<int:item_id>", views.delete_item, name="Удалить")
 
 ]
 

@@ -25,12 +25,19 @@
                     <form action="{% url 'Обновить' item.id %}" method="post" id="new_item_form" enctype="multipart/form-data" class="col-8 offset-2" style="margin-top: 3%">
                         {% csrf_token %}
                         <input type="text" value="{{ item.name }}" name="name" required><br>
-                        <label class="col-6" for="ingredients">Состав:</label>
+                        <div class="row">
+                            <label class="col-6 offset-3" for="ingredients">Состав:</label>
+                            <div class="col-2 offset-1">
+                                <a class="" style="color: black; font-size: 24pt" href="{% url 'Удалить' item.id %}"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </div>
                         <textarea style="margin-top: 4%; border: 1px solid rgb(127, 132, 130); min-height: 150px"
                                   class="col-6" name="ingredients" required>{{ item.ingredients }}</textarea><br>
                         <label for="photo">Заменить фото</label>&nbsp
                         <input type="file" name="photo" id="photo" class="" ><br>
-                        <img src="{{ item.photo.url }}" style="margin-top: 4%">
+                        <div class="col-8 offset-2" style="margin-top: 4%; text-align: center">
+                            <img src="{{ item.photo.url }}" style="width: 100%"  id="item_photo">
+                        </div>
                         <div class="row" style="margin-top: 3%">
                             <span id="output"></span>
                         </div>
@@ -94,12 +101,17 @@
                 check_values()
 
                 function handleFileSelect(evt) {
+
+                    let item_photo = document.getElementById('#item_photo')
+                    console.log(item_photo)
+
                     let file = evt.target.files; // FileList object
                     let f = file[0];
                     // Only process image files.
                     if (!f.type.match('image.*')) {
-                        alert("Image only please....");
+                        alert("Только изображения....");
                     }
+
                     let reader = new FileReader();
                     // Closure to capture the file information.
                     reader.onload = (function(theFile) {
@@ -112,7 +124,11 @@
                     })(f);
                     // Read in the image file as a data URL.
                     reader.readAsDataURL(f);
+
+
+                        /*item_photo.style.display = 'none'*/
                 }
+
                 document.getElementById('photo').addEventListener('change', handleFileSelect, false);
 
                 function add_ingredient() {

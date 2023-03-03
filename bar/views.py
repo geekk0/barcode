@@ -104,13 +104,10 @@ def update_item(request, item_id):
 
     request_dict = request.POST.dict()
 
-    print(request_dict)
-
     item_object = ItemCard.objects.get(id=item_id)
 
     for key, value in request.FILES.items():
         if str(value).endswith(('.png', 'jpg', 'gif', 'svg', 'jpeg')):
-            print("new photo")
             new_photo = handle_photo(request)
             item_object.photo = new_photo
 
@@ -118,10 +115,10 @@ def update_item(request, item_id):
         item_object.name = request_dict['name']
 
     if request_dict['ingredients']:
-        item_object.name = request_dict['ingredients']
+        item_object.ingredients = request_dict['ingredients']
 
     if request_dict['volume']:
-        item_object.name = request_dict['volume']
+        item_object.volume = request_dict['volume']
 
     extras_ids = []
     for key, value in request_dict.items():
@@ -158,5 +155,12 @@ def change_status(request, item_id, status):
     else:
         item_object.available = False
     item_object.save()
+
+    return HttpResponseRedirect('/Меню')
+
+
+def delete_item(request, item_id):
+    item_object = ItemCard.objects.get(id=item_id)
+    item_object.delete()
 
     return HttpResponseRedirect('/Меню')
