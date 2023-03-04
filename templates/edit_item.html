@@ -102,8 +102,8 @@
 
                 function handleFileSelect(evt) {
 
-                    let item_photo = document.getElementById('#item_photo')
-                    console.log(item_photo)
+                    let item_photo = evt.target.parentElement.querySelector('#item_photo')
+                    item_photo.style.display = 'none'
 
                     let file = evt.target.files; // FileList object
                     let f = file[0];

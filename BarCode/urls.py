@@ -10,6 +10,8 @@ urlpatterns = [
     path('', include('bar.urls')),
     path('login/', views.LoginView.as_view()),
     path('admin/', admin.site.urls),
+    path('api/', include('api.urls')),
+
 ]
 
 if settings.DEBUG:
