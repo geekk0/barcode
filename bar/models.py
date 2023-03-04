@@ -21,3 +21,17 @@ class ItemCard(models.Model):
         return self.name
 
 
+class Order(models.Model):
+    time = models.DateTimeField(verbose_name="Дата время заказа")
+    location = models.CharField(verbose_name="Куда принести", default="Локация не указана", max_length=256)
+    item = models.ForeignKey(ItemCard, verbose_name="Блюда", on_delete=models.CASCADE)
+    quantity = models.IntegerField(verbose_name="Количество")
+    sugar = models.IntegerField(verbose_name="Сахар")
+    extras = models.ManyToManyField(Extras, verbose_name="Выбранные допы", blank=True, related_name="selected_extras")
+    status = models.BooleanField(verbose_name="Активный заказ", default=True)
+
+    def __str__(self):
+        return str(self.id)
+
+
+

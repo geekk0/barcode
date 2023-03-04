@@ -1,0 +1,138 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+{%  block content %}
+
+    <div class="main_menu " style="" id="main_menu">
+            <div class="row">
+                <ul class="" style="text-align: center;">
+                    <li class="col-2"><a style="font-weight: bold" href="#"><img style="margin-bottom: 5%; color: black;" src="{% static 'images/st.jpg' %}"><span id="logo_text">Simple.Bar</span></a></li>
+                    <li class="col-1"><a href="#" class="" style="color:rgb(255, 152, 0);
+                        border: 1px solid rgb(255, 152, 0); border-radius:5px; padding: 10%; width: 100%">Заказы</a></li>
+                    <li class="col-1"><a href="{% url 'Меню' %}" class="" style="color:rgb(77, 208, 225);
+                        border: 1px solid rgb(77, 208, 225); border-radius:5px; padding: 10%; width: 100%">Меню</a></li>
+                    <li class="col-1 offset-2"><a href="{% url 'Выход' %}"  class="">Выйти</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
+    <div class="col-10 offset-1">
+        <div class="" style="text-align: center; margin-top:2%">
+            <h2 style="font-weight: bold">Заказы</h2>
+        </div>
+
+        <div class="col-6 offset-3" style="margin-top:4%; text-align: center">
+
+            <form id="orders_date" method="post" action="{% url "Заказы" %}">
+                <div class="row">
+                    <div class="col-3">
+                        <label for="status">Показать по статусу:</label>
+                        <select name="status" class="form-select" oninput="send_order_filter(this)">
+                            {% if selected_status == "Активные" or not selected_status %}
+                                <option selected="selected">Активные</option>
+                                <option>Выполненные</option>
+                                <option>Все</option>
+                            {% elif selected_status == "Выполненные" %}
+                                <option>Активные</option>
+                                <option selected="selected">Выполненные</option>
+                                <option>Все</option>
+                            {% elif selected_status == "Все" %}
+                                <option>Активные</option>
+                                <option>Выполненные</option>
+                                <option selected="selected">Все</option>
+                            {% endif %}
+                        </select>
+                    </div>
+
+                    <div class="col-6">
+                        <h4>Выбранная дата</h4>
+                        {% csrf_token %}
+                        {% if selected_date %}
+                            <input type="date" name="orders_date" value="{{ selected_date }}" oninput="send_order_filter(this)">
+                        {% else %}
+                            <input type="date" name="orders_date" oninput="send_order_filter(this)">
+                        {% endif %}
+                    </div>
+
+
+                </div>
+
+            </form>
+        </div>
+
+        <div class="container" style="margin-top: 4%">
+            <table class="col-10 offset-1" style="text-align: center">
+                <thead>
+                    <tr>
+                        <th>Время</th>
+                        <th>Куда</th>
+                        <th>Название</th>
+                        <th>Кол-во</th>
+                        <th>Сахар</th>
+                        <th>Доп</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td class="col-1">{{ order.time|time:'H:i' }}</td>
+                            <td class="col-1">{{ order.location }}</td>
+                            <td class="col-1">{{ order.item }}</td>
+                            <td class="col-1">{{ order.quantity }}</td>
+                            <td class="col-1">{{ order.sugar }}</td>
+                            <td style="text-align: center; padding:2%; line-height: 0.5" class="col-2">
+                                <div class="row">
+                                    {% for extra in order.extras.all %}
+                                        <div class="col-12">
+                                            <p>{{ extra.name|linebreaksbr }},</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </td>
+                            <td class="col-1" style="border:none"><a style="color: green" href="{% url 'Заказ выполнен' order.id %}"><i class="fa-solid fa-check" style="font-size: 20pt"></i></a></td>
+                            <td class="col-1" style="border:none"><a style="color:red" href="{% url 'Удалить заказ' order.id %}"><i class="fa-solid fa-trash" style="font-size: 20pt"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        onscroll = (event) => {
+            let main_menu = document.getElementById('main_menu')
+            if (window.scrollY > main_menu.scrollHeight) {
+                main_menu.classList.add('scrolled_menu')
+            }
+
+            if (window.scrollY === 0) {
+                main_menu.classList.remove('scrolled_menu')
+            }
+        };
+
+        function test(e) {
+            console.log(e.checked)
+            let item_id = e.parentElement.querySelector("#item_id").innerHTML
+            if (e.checked) {
+                window.location= "/Изменить доступность/item_id/status".replace('item_id', item_id).replace('status', 'True')
+            }
+            else {
+                window.location= "/Изменить доступность/item_id/status".replace('item_id', item_id).replace('status', 'False')
+            }
+
+        }
+
+        function send_order_filter(e) {
+            document.forms["orders_date"].submit();
+            /*form.submit()*/
+        }
+    </script>
+
+
+{% endblock %}

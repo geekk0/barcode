@@ -7,8 +7,8 @@
                 <div class="row">
                     <ul class="" style="text-align: center;">
                         <li class="col-2"><a style="font-weight: bold" href="#"><img style="margin-bottom: 5%; color: black;" src="{% static 'images/st.jpg' %}"><span id="logo_text">Simple.Bar</span></a></li>
-                        <li class="col-1"><a href="#" style="color:rgb(255, 152, 0);
-                        border: 1px solid rgb(255, 152, 0); border-radius:5px; padding: 10%; width: 100%" >Заказы</a></li>
+                        <li class="col-1"><a href="{% url 'Заказы' %}" class="" style="color:rgb(255, 152, 0);
+                        border: 1px solid rgb(255, 152, 0); border-radius:5px; padding: 10%; width: 100%">Заказы</a></li>
                         <li class="col-1 selected_menu"><a href="{% url 'Меню' %}" style="color:rgb(77, 208, 225);
                         border: 1px solid rgb(77, 208, 225); border-radius:5px; padding: 10%; width: 100%">Меню</a></li>
                         <li class="col-1 offset-2"><a href="{% url 'Выход' %}"  class="">Выйти</a></li>

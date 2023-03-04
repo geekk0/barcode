@@ -13,7 +13,11 @@ urlpatterns = [
     path("Смотреть/<int:item_id>", views.edit_item, name="Смотреть"),
     path("Обновить/<int:item_id>", views.update_item, name="Обновить"),
     path("Изменить доступность/<int:item_id>/<str:status>", views.change_status, name="Изменить доступность"),
-    path("Удалить/<int:item_id>", views.delete_item, name="Удалить")
+    path("Удалить/<int:item_id>", views.delete_item, name="Удалить"),
+    # path("Фильтровать заказы", views.orders_filter, name="Фильтровать заказы"),
+    path("Заказы", views.orders_list, name="Заказы"),
+    path("Заказ выполнен/<int:order_id>", views.order_completed, name="Заказ выполнен"),
+    path("Удалить заказ/<int:order_id>", views.delete_order, name="Удалить заказ")
 
 ]
 

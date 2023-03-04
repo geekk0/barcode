@@ -1,6 +1,8 @@
+import datetime
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, Group
-from .models import ItemCard, Extras
+from .models import ItemCard, Extras, Order
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -164,3 +166,84 @@ def delete_item(request, item_id):
     item_object.delete()
 
     return HttpResponseRedirect('/Меню')
+
+
+"""def orders_list(request):
+
+    date = datetime.date.today()
+
+    orders = Order.objects.filter(time__year=date.year, time__month=date.month, time__day=date.day, status=True).order_by('-time')
+
+    # selected_date = str(datetime.datetime.strptime(date, '%Y-%m-%d').date())
+
+    return render(request, "order_list.html", {"orders": orders})"""
+
+
+def orders_list(request):
+
+    request_dict = request.POST.dict()
+
+    print(request_dict)
+
+
+    if 'orders_date' not in request_dict.keys():
+
+        date = datetime.date.today()
+
+        orders = Order.objects.filter(time__year=date.year, time__month=date.month, time__day=date.day)
+
+        selected_date = date.strftime('%Y-%m-%d')
+
+    else:
+
+        date = request_dict['orders_date']
+
+        orders = Order.objects.filter(time__year=date[0:4], time__month=date[5:7], time__day=date[8:10])
+
+        selected_date = str(datetime.datetime.strptime(date, '%Y-%m-%d').date())
+
+    if "status" not in request_dict.keys():
+
+        orders = orders.filter(status=True).order_by('-time')
+        selected_status = "Активные"
+
+    else:
+        if request_dict['status'] == "Активные":
+
+            orders = orders.filter(status=True).order_by('-time')
+            selected_status = "Активные"
+
+        elif request_dict['status'] == "Выполненные":
+
+            orders = orders.filter(status=False).order_by('-time')
+            selected_status = "Выполненные"
+
+            print("done")
+
+        else:
+            orders = orders.order_by('-time')
+            selected_status = "Все"
+
+    context = {"orders": orders, "selected_date": selected_date, "selected_status": selected_status}
+
+    return render(request, "order_list.html", context)
+
+
+def order_completed(request, order_id):
+
+    order_object = Order.objects.get(id=order_id)
+
+    order_object.status = False
+
+    order_object.save()
+
+    return HttpResponseRedirect('/Заказы')
+
+
+def delete_order(request, order_id):
+
+    order_object = Order.objects.get(id=order_id)
+
+    order_object.delete()
+
+    return HttpResponseRedirect('/Заказы')

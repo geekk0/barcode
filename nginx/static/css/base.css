@@ -144,4 +144,11 @@ body {
   
 }
 
+td {
+  border: 1px solid rgb(127, 132, 130);
+}
+
+th {
+  border: 1px solid rgb(127, 132, 130);
+}
 
