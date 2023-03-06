@@ -8,6 +8,7 @@ from api import views
 
 urlpatterns = [
     path('get_menu', views.GetMenu.as_view({'get': 'list'})),
+    path('get_item/<int:item_id>', views.get_item, name='get_item')
 
 
 

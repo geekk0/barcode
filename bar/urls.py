@@ -17,7 +17,7 @@ urlpatterns = [
     # path("Фильтровать заказы", views.orders_filter, name="Фильтровать заказы"),
     path("Заказы", views.orders_list, name="Заказы"),
     path("Заказ выполнен/<int:order_id>", views.order_completed, name="Заказ выполнен"),
-    path("Удалить заказ/<int:order_id>", views.delete_order, name="Удалить заказ")
+    path("Удалить заказ/<int:order_id>", views.delete_order, name="Удалить заказ"),
 
 ]
 

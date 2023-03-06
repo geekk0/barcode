@@ -11,6 +11,8 @@ from .forms import LoginForm
 from io import BytesIO, StringIO
 from PIL import Image, ImageOps
 from django.core.files.base import ContentFile
+from rest_framework.decorators import api_view
+
 
 
 class LoginView(View):
@@ -247,3 +249,6 @@ def delete_order(request, order_id):
     order_object.delete()
 
     return HttpResponseRedirect('/Заказы')
+
+
+
