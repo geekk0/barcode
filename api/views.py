@@ -1,7 +1,7 @@
 from bar.models import ItemCard, Order, Extras
 from rest_framework import viewsets
 from rest_framework import permissions
-from api.serializer import MenuSerializer
+from api.serializer import MenuSerializer, ExtraSerializer
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from datetime import date, datetime
@@ -39,9 +39,21 @@ def get_item(request, item_id):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-@api_view()
-def hello_world(request, item_id):
-    return Response({"message": "Hello, world!"})
+class GetItemExtras(viewsets.ModelViewSet):
+
+    def get_queryset(self):
+        item_id = self.request.query_params.get('item_id')
+
+        item_object = ItemCard.objects.get(id=item_id)
+
+        extras = Extras.objects.filter(itemcard=item_object).order_by("list_number")
+
+        return extras
+
+    def get_serializer_class(self):
+        serializer_class = ExtraSerializer
+        return serializer_class
+
 
 
 
