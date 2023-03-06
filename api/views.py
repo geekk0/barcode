@@ -1,7 +1,7 @@
 from bar.models import ItemCard, Order, Extras
 from rest_framework import viewsets
 from rest_framework import permissions
-from api.serializer import MenuSerializer, ExtraSerializer
+from api.serializer import MenuSerializer, ExtraSerializer, OrderSerializer
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from datetime import date, datetime
@@ -55,7 +55,16 @@ class GetItemExtras(viewsets.ModelViewSet):
         return serializer_class
 
 
+class CreateOrder(APIView):
 
+    def post(self, request):
+
+        serializer = OrderSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
