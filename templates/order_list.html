@@ -30,7 +30,7 @@
 
             <form id="orders_date" method="post" action="{% url "Заказы" %}">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <label for="status">Показать по статусу:</label>
                         <select name="status" class="form-select" oninput="send_order_filter(this)">
                             {% if selected_status == "Активные" or not selected_status %}
@@ -49,7 +49,7 @@
                         </select>
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-4">
                         <h4>Выбранная дата</h4>
                         {% csrf_token %}
                         {% if selected_date %}
@@ -83,7 +83,7 @@
                         <tr>
                             <td class="col-1">{{ order.time|time:'H:i' }}</td>
                             <td class="col-1">{{ order.location }}</td>
-                            <td class="col-1">{{ order.item }}</td>
+                            <td class="col-2">{{ order.item }}</td>
                             <td class="col-1">{{ order.quantity }}</td>
                             <td class="col-1">{{ order.sugar }}</td>
                             <td style="text-align: center; padding:2%; line-height: 0.5" class="col-2">
@@ -95,8 +95,12 @@
                                     {% endfor %}
                                 </div>
                             </td>
-                            <td class="col-1" style="border:none"><a style="color: green" href="{% url 'Заказ выполнен' order.id %}"><i class="fa-solid fa-check" style="font-size: 20pt"></i></a></td>
-                            <td class="col-1" style="border:none"><a style="color:red" href="{% url 'Удалить заказ' order.id %}"><i class="fa-solid fa-trash" style="font-size: 20pt"></i></a></td>
+                            {% if order.status %}
+                                <td class="col-1" style="border:none"><a style="color: green" href="{% url 'Заказ выполнен' order.id %}"><i class="fa-solid fa-check" style="font-size: 20pt"></i></a></td>
+                            {% else %}
+                                <td class="col-1" style="border:none"><p style="color: grey"><i class="fa-solid fa-check" style="font-size: 20pt"></i></p></td>
+                            {% endif %}
+                            <!--td class="col-1" style="border:none"><a style="color:red" href="{% url 'Удалить заказ' order.id %}"><i class="fa-solid fa-trash" style="font-size: 20pt"></i></a></td-->
                         </tr>
                     {% endfor %}
                 </tbody>
