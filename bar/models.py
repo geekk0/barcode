@@ -14,6 +14,7 @@ class ItemCard(models.Model):
     ingredients = models.TextField(verbose_name="Состав")
     volume = models.CharField(verbose_name="Объем", default="Объем не указан", max_length=256)
     photo = models.ImageField(verbose_name="Фото")
+    photo_version = models.IntegerField(verbose_name="Версия изображения", default=1)
     extras = models.ManyToManyField(Extras, verbose_name="Дополнительные ингредиенты", blank=True)
     available = models.BooleanField(verbose_name="Доступен к заказу", default=True)
 

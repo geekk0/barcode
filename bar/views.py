@@ -114,6 +114,7 @@ def update_item(request, item_id):
         if str(value).endswith(('.png', 'jpg', 'gif', 'svg', 'jpeg')):
             new_photo = handle_photo(request)
             item_object.photo = new_photo
+            item_object.photo_version += 1
 
     if request_dict['name']:
         item_object.name = request_dict['name']
