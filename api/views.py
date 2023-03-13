@@ -63,8 +63,9 @@ class CreateOrder(APIView):
         serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            order_info = str(datetime.now().time())[:8] + " Поступил заказ, стол: '" + serializer.data['location'] \
-                         + "'."
+            order_info = str(datetime.now().time())[:8] + " Поступил заказ, стол: '" + str(serializer.data['location']) + "'.\n" + "Состав заказа: \n" + ItemCard.objects.get(id=serializer.data['item']).name + "\nКоличество: " + \
+                         str(serializer.data['quantity']) + "\nСахар: " + str(serializer.data['sugar']) + "\n" + "Дополнительно: " + \
+                         get_extras_text(serializer.data['extras'])
 
             print(order_info)
             send_telegram_order_notification(order_info)
@@ -76,7 +77,17 @@ class CreateOrder(APIView):
 
 
 
+def get_extras_text(list):
 
+    extras_text = ""
 
+    for extra_id in list:
+        extra_name = Extras.objects.get(id=extra_id).name
+        extras_text += extra_name + " "
+
+    if len(extras_text) < 1:
+        extras_text = "-"
+
+    return extras_text
 
 
