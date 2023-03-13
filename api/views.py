@@ -13,6 +13,7 @@ from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
+from .bot import send_telegram_order_notification
 
 
 class GetMenu(viewsets.ModelViewSet):
@@ -62,6 +63,12 @@ class CreateOrder(APIView):
         serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            order_info = str(datetime.now().time())[:8] + " Поступил заказ, стол: '" + serializer.data['location'] \
+                         + "'."
+
+            print(order_info)
+            send_telegram_order_notification(order_info)
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
