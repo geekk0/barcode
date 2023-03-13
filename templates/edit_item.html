@@ -61,18 +61,27 @@
 
 
                             <tbody>
-                                {% for extra in extras %}
+                                {% if not extras %}
                                     <tr id="ingredient">
-                                    <td class="col-2" id="number">{{ extra.list_number }}</td>
-                                    <td class="col-5" id="name" onclick="show_input(this)"><input type="text" name="input_{{ extra.list_number }}" value="{{ extra.name }}"></td>
-                                    <td class="col-2" style="color: red" onclick="remove_ingredient(this)">X</td>
-                                </tr>
-                                {% endfor %}
-                                <tr id="ingredient" style="display:none">
-                                    <td class="col-2" id="number">1</td>
-                                    <td class="col-5" id="name" onclick="show_input(this)"></td>
-                                    <td class="col-2" style="color: red" onclick="remove_ingredient(this)">X</td>
-                                </tr>
+                                        <td class="col-2" id="number">1</td>
+                                        <td class="col-5" id="name" onclick="show_input(this)"></td>
+                                        <td class="col-2" style="color: red" onclick="remove_ingredient(this)">X</td>
+                                    </tr>
+
+                                {% else %}
+                                    {% for extra in extras %}
+                                        <tr id="ingredient">
+                                        <td class="col-2" id="number">{{ extra.list_number }}</td>
+                                        <td class="col-5" id="name" onclick="show_input(this)"><input type="text" name="input_{{ extra.list_number }}" value="{{ extra.name }}"></td>
+                                        <td class="col-2" style="color: red" onclick="remove_ingredient(this)">X</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr id="ingredient" style="display:none">
+                                        <td class="col-2" id="number">1</td>
+                                        <td class="col-5" id="name" onclick="show_input(this)"></td>
+                                        <td class="col-2" style="color: red" onclick="remove_ingredient(this)">X</td>
+                                    </tr>
+                                {% endif %}
                             </tbody>
                          </table>
 
