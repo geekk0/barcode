@@ -94,10 +94,15 @@ def save_item(request):
 def handle_photo(request):
     for key, value in request.FILES.items():
 
+        fixed_width = 512
+
         img_io = BytesIO()
         optimized_image = Image.open(value)
         optimized_image = ImageOps.exif_transpose(optimized_image)
-        optimized_image.save(img_io, format='PNG', quality=60, optimized=True)
+        width_percent = (fixed_width / float(optimized_image.size[0]))
+        height_size = int((float(optimized_image.size[1]) * float(width_percent)))
+        resized_optimized_image = optimized_image.resize((fixed_width, height_size))
+        resized_optimized_image.save(img_io, format='PNG', quality=60, optimized=True)
         img_content = ContentFile(img_io.getvalue(), str(value))
 
         return img_content
