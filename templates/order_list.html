@@ -22,15 +22,26 @@
 
 
     <div class="col-10 offset-1">
-        <div class="" style="text-align: center; margin-top:2%">
+        <div class="" style="text-align: center; margin-top:1%">
             <h2 style="font-weight: bold">Заказы</h2>
         </div>
 
-        <div class="col-6 offset-3" style="margin-top:4%; text-align: center">
+        <div class="col-6 offset-3" style="margin-top:2%; text-align: center">
 
             <form id="orders_date" method="post" action="{% url "Заказы" %}">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-4 offset-4">
+                        {% csrf_token %}
+                        {% if selected_date %}
+                            <input type="date" class="datepicker" name="orders_date" value="{{ selected_date }}" oninput="send_order_filter(this)">
+                        {% else %}
+                            <input type="date" class="datepicker"
+                                   name="orders_date" oninput="send_order_filter(this)">
+                        {% endif %}
+                    </div>
+
+
+                    <div class="col-4 offset-4" style="margin-top:2%">
                         <label for="status">Показать по статусу:</label>
                         <select name="status" class="form-select" oninput="send_order_filter(this)">
                             {% if selected_status == "Активные" or not selected_status %}
@@ -49,15 +60,7 @@
                         </select>
                     </div>
 
-                    <div class="col-4">
-                        <h4>Выбранная дата</h4>
-                        {% csrf_token %}
-                        {% if selected_date %}
-                            <input type="date" name="orders_date" value="{{ selected_date }}" oninput="send_order_filter(this)">
-                        {% else %}
-                            <input type="date" name="orders_date" oninput="send_order_filter(this)">
-                        {% endif %}
-                    </div>
+
 
 
                 </div>

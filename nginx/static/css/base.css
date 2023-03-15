@@ -123,6 +123,13 @@ body {
   border: 1px solid rgb(127, 132, 130);
 }
 
+.datepicker {
+  font-size: 16pt;
+  border-radius: .25rem;
+  border: 1px solid #ced4da;
+  font-weight: normal;
+}
+
 @media screen and (orientation:landscape) and (max-width: 1600px) {
   
   .scrolled_menu {
