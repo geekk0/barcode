@@ -35,7 +35,8 @@ class GetMenu(viewsets.ModelViewSet):
 class MenuSearch(viewsets.ModelViewSet):
 
     def get_queryset(self):
-        input_text = self.request.query_params.get('item_id')
+        input_text = self.request.query_params.get('input_text')
+        print(input_text)
 
         menu_queryset = ItemCard.objects.filter(available=True, name__icontains=input_text)
 
