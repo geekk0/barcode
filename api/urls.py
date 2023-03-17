@@ -11,6 +11,8 @@ urlpatterns = [
     path('get_item/<int:item_id>', views.get_item, name='get_item'),
     path('get_item_extras', views.GetItemExtras.as_view({'get': 'list'})),
     path('create_order', views.CreateOrder.as_view()),
+    path('menu_search', views.MenuSearch.as_view({'get': 'list'})),
+
 
 
 

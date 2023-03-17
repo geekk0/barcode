@@ -32,6 +32,24 @@ class GetMenu(viewsets.ModelViewSet):
         return permission_classes"""
 
 
+class MenuSearch(viewsets.ModelViewSet):
+
+    def get_queryset(self):
+        input_text = self.request.query_params.get('item_id')
+
+        menu_queryset = ItemCard.objects.filter(available=True, name__icontains=input_text)
+
+        return menu_queryset
+
+    def get_serializer_class(self):
+        serializer_class = MenuSerializer
+        return serializer_class
+
+    """def get_permissions(self):
+        permission_classes = [permissions.IsAuthenticated()]
+        return permission_classes"""
+
+
 @api_view(['GET'])
 def get_item(request, item_id):
     item_object = ItemCard.objects.get(id=item_id)
