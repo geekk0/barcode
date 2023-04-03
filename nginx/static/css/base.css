@@ -133,8 +133,8 @@ body {
 @media screen and (orientation:landscape) and (max-width: 1600px) {
   
   .scrolled_menu {
-    width: 81%;
-    left: 9.5%;
+    width: 100%;
+    left: 0;
   }
   
   .slider {

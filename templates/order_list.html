@@ -33,7 +33,7 @@
                     <div class="col-4 offset-4">
                         {% csrf_token %}
                         {% if selected_date %}
-                            <input type="date" class="datepicker" name="orders_date" value="{{ selected_date }}" oninput="send_order_filter(this)">
+                            <input type="date" style="text-align: center" class="datepicker" name="orders_date" value="{{ selected_date }}" oninput="send_order_filter(this)">
                         {% else %}
                             <input type="date" class="datepicker"
                                    name="orders_date" oninput="send_order_filter(this)">
