@@ -138,12 +138,19 @@
                 }
 
                 function remove_ingredient(e) {
+                    let ings = document.querySelectorAll('#ingredient')
                     let parent = e.parentElement
-                    parent.remove()
                     let ing = document.getElementById("ingredient")
+                    if (ings.length > 1 ) {
+                        parent.remove()
+                        /*let new_value = body.getAttribute('cloned')*/
+                    }
+                    else {
+                        e.parentElement.querySelector('input').value = ''
+                        }
                     let body = ing.parentElement
-                    /*let new_value = body.getAttribute('cloned')*/
-                    body.setAttribute('cloned', (parseInt(body.getAttribute('cloned')) - 1).toString() )
+                    body.setAttribute('cloned', (parseInt(body.getAttribute('cloned')) - 1).toString())
+
 
 
                 }
