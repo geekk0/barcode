@@ -141,18 +141,16 @@
                     let ings = document.querySelectorAll('#ingredient')
                     let parent = e.parentElement
                     let ing = document.getElementById("ingredient")
+                    let body = ing.parentElement
                     if (ings.length > 1 ) {
                         parent.remove()
+                        body.setAttribute('cloned', (parseInt(body.getAttribute('cloned')) - 1).toString())
                         /*let new_value = body.getAttribute('cloned')*/
                     }
                     else {
                         e.parentElement.querySelector('input').value = ''
+                        body.removeAttribute('cloned')
                         }
-                    let body = ing.parentElement
-                    body.setAttribute('cloned', (parseInt(body.getAttribute('cloned')) - 1).toString())
-
-
-
                 }
 
                 function show_input(e){

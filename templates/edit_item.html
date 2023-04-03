@@ -180,13 +180,23 @@
                 function remove_ingredient(e) {
                     let parent = e.parentElement
                     let cloned_value = parseInt(parent.parentElement.getAttribute('cloned'))
-                    if (parseInt(parent.querySelector("#number").innerHTML) < cloned_value) {
-                        reset_numbers(parseInt(parent.querySelector("#number").innerHTML))
-                    }
-                    parent.remove()
+                    let ings = document.querySelectorAll('#ingredient')
                     let ing = document.getElementById("ingredient")
                     let body = ing.parentElement
-                    body.setAttribute('cloned', (parseInt(body.getAttribute('cloned')) - 1).toString() )
+                    console.log(ings.length)
+                    if (ings.length - 1 > 1 ) {
+                        if (parseInt(parent.querySelector("#number").innerHTML) < cloned_value) {
+                            reset_numbers(parseInt(parent.querySelector("#number").innerHTML))
+                        }
+                        parent.remove()
+                        body.setAttribute('cloned', (parseInt(body.getAttribute('cloned')) - 1).toString() )
+                    }
+                    else {
+                        e.parentElement.querySelector('input').value = ''
+                        body.removeAttribute('cloned')
+                    }
+
+
 
 
                 }
