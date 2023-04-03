@@ -52,7 +52,7 @@ def user_logout(request):
 @login_required
 def menu(request):
 
-    items = ItemCard.objects.all().order_by('-id')
+    items = ItemCard.objects.all().order_by("-available", '-id')
 
     context = {"items": items}
 
