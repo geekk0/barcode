@@ -155,17 +155,10 @@
                     if (parent.hasAttribute('cloned')) {
                         let ing_count = parent.getAttribute('cloned')
 
-                        if (ing_count < 4) {
-
-                            clone.querySelector('#name').innerHTML = ""
-                            parent.setAttribute('cloned', (parseInt(ing_count) + 1).toString())
-                            clone.querySelector('#number').innerHTML = (parseInt(ing_count) + 1).toString()
-                            clone.querySelector('#name').removeAttribute('input')
-                        }
-                        else {
-                            clone.remove()
-                            return false;
-                        }
+                        clone.querySelector('#name').innerHTML = ""
+                        parent.setAttribute('cloned', (parseInt(ing_count) + 1).toString())
+                        clone.querySelector('#number').innerHTML = (parseInt(ing_count) + 1).toString()
+                        clone.querySelector('#name').removeAttribute('input')
                     }
                     else {
                         parent.setAttribute('cloned', '2')

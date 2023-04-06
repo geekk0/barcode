@@ -115,17 +115,10 @@
                     if (parent.hasAttribute('cloned')) {
                         let ing_count = parent.getAttribute('cloned')
 
-                        if (ing_count < 4) {
-
-                            clone.querySelector('#name').innerHTML = ""
-                            parent.setAttribute('cloned', (parseInt(ing_count) + 1).toString())
-                            clone.querySelector('#number').innerHTML = (parseInt(ing_count) + 1).toString()
-                            clone.querySelector('#name').removeAttribute('input')
-                        }
-                        else {
-                            clone.remove()
-                            return false;
-                        }
+                        clone.querySelector('#name').innerHTML = ""
+                        parent.setAttribute('cloned', (parseInt(ing_count) + 1).toString())
+                        clone.querySelector('#number').innerHTML = (parseInt(ing_count) + 1).toString()
+                        clone.querySelector('#name').removeAttribute('input')
                     }
                     else {
                         parent.setAttribute('cloned', '2')
@@ -142,15 +135,19 @@
                     let parent = e.parentElement
                     let ing = document.getElementById("ingredient")
                     let body = ing.parentElement
-                    if (ings.length > 1 ) {
+                    let cloned_value = parseInt(parent.parentElement.getAttribute('cloned'))
+
+                    if (ings.length - 1 > 1 ) {
+                        if (parseInt(parent.querySelector("#number").innerHTML) < cloned_value) {
+                            reset_numbers(parseInt(parent.querySelector("#number").innerHTML))
+                        }
                         parent.remove()
-                        body.setAttribute('cloned', (parseInt(body.getAttribute('cloned')) - 1).toString())
-                        /*let new_value = body.getAttribute('cloned')*/
+                        body.setAttribute('cloned', (parseInt(body.getAttribute('cloned')) - 1).toString() )
                     }
                     else {
                         e.parentElement.querySelector('input').value = ''
                         body.removeAttribute('cloned')
-                        }
+                    }
                 }
 
                 function show_input(e){
@@ -164,6 +161,18 @@
                         e.appendChild(input); // put it into the DOM
                         input.focus()
                         e.setAttribute('input', 'true')
+                    }
+                }
+
+                function reset_numbers(deleting_number) {
+                    let ings = document.querySelectorAll('#ingredient')
+                    console.log(ings.length[2])
+                    for ( let i = 0; i < ings.length; i++) {
+                        let number = ings[i].querySelector('#number')
+                        if (parseInt(number.innerHTML) > deleting_number){
+                             number.innerHTML = (parseInt(number.innerHTML) - 1).toString()
+                             number.parentElement.querySelector('input').name = "input_" + number.innerHTML
+                        }
                     }
                 }
             </script>
