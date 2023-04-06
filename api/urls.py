@@ -12,8 +12,5 @@ urlpatterns = [
     path('get_item_extras', views.GetItemExtras.as_view({'get': 'list'})),
     path('create_order', views.CreateOrder.as_view()),
     path('menu_search', views.MenuSearch.as_view({'get': 'list'})),
-
-
-
-
+    path('send_message/<str:table>/<str:message_text>', views.send_message, name='send_message')
 ]

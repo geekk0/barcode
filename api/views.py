@@ -59,6 +59,16 @@ def get_item(request, item_id):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+def send_message(request, table, message_text):
+
+    send_telegram_order_notification("Сообщение от стола " + "'" + table + "':\n" + message_text)
+
+    # serializer = MenuSerializer(item_object)
+
+    return Response(status=status.HTTP_200_OK)
+
+
 class GetItemExtras(viewsets.ModelViewSet):
 
     def get_queryset(self):
