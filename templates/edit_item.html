@@ -21,7 +21,7 @@
 
             <div class="container">
                 <div class="col-10 offset-1" style="text-align: center; margin-top:2%">
-                    <h3 style="font-weight: bold">Добавить в меню</h3>
+                    <h3 style="font-weight: bold">Изменить блюдо</h3>
                     <form action="{% url 'Обновить' item.id %}" method="post" id="new_item_form" enctype="multipart/form-data" class="col-8 offset-2" style="margin-top: 3%">
                         {% csrf_token %}
                         <textarea class="col-8" name="name" id="item_name" required>{{ item.name }}</textarea><br>
