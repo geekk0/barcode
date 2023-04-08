@@ -130,6 +130,13 @@ body {
   font-weight: normal;
 }
 
+#item_name {
+  outline: none;
+  border: none;
+  background: none;
+  text-align: center;
+}
+
 @media screen and (orientation:landscape) and (max-width: 1600px) {
   
   .scrolled_menu {

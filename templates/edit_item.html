@@ -24,10 +24,10 @@
                     <h3 style="font-weight: bold">Добавить в меню</h3>
                     <form action="{% url 'Обновить' item.id %}" method="post" id="new_item_form" enctype="multipart/form-data" class="col-8 offset-2" style="margin-top: 3%">
                         {% csrf_token %}
-                        <input type="text" value="{{ item.name }}" name="name" required><br>
+                        <textarea class="col-8" name="name" id="item_name" required>{{ item.name }}</textarea><br>
                         <div class="row">
                             <label class="col-6 offset-3" for="ingredients">Состав:</label>
-                            <div class="col-2 offset-1">
+                            <div class="col-2 offset-1" style="margin-top: auto">
                                 <a class="" style="color: black; font-size: 24pt" href="{% url 'Удалить' item.id %}"><i class="fa-solid fa-trash"></i></a>
                             </div>
                         </div>
