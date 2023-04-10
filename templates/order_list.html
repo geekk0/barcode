@@ -69,7 +69,7 @@
         </div>
 
         <div class="container" style="margin-top: 4%">
-            <table class="col-10 offset-1" style="text-align: center">
+            <table class="orders_table col-12" style="border: solid 1px #585454; border-radius: 10px; margin-top: 2%">
                 <thead>
                     <tr>
                         <th>Время</th>
@@ -77,13 +77,14 @@
                         <th>Название</th>
                         <th>Кол-во</th>
                         <th>Сахар</th>
-                        <th>Доп</th>
+                        <th>Дополнительно</th>
+                        <th>Готово</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {% for order in orders %}
-                        <tr>
+                        <tr id="order_tr">
                             <td class="col-1">{{ order.time|time:'H:i' }}</td>
                             <td class="col-1">{{ order.location }}</td>
                             <td class="col-2">{{ order.item }}</td>
@@ -99,9 +100,9 @@
                                 </div>
                             </td>
                             {% if order.status %}
-                                <td class="col-1" style="border:none"><a style="color: green" href="{% url 'Заказ выполнен' order.id %}"><i class="fa-solid fa-check" style="font-size: 20pt"></i></a></td>
+                                <td class="col-1" style="border-top: solid 1px #585454; border-right: none"><a style="color: green" href="{% url 'Заказ выполнен' order.id %}"><i class="fa-solid fa-check" style="font-size: 20pt"></i></a></td>
                             {% else %}
-                                <td class="col-1" style="border:none"><p style="color: grey"><i class="fa-solid fa-check" style="font-size: 20pt"></i></p></td>
+                                <td class="col-1" style="border-top: solid 1px #585454; border-right: none"><p style="color: grey"><i class="fa-solid fa-check" style="font-size: 20pt"></i></p></td>
                             {% endif %}
                             <!--td class="col-1" style="border:none"><a style="color:red" href="{% url 'Удалить заказ' order.id %}"><i class="fa-solid fa-trash" style="font-size: 20pt"></i></a></td-->
                         </tr>
@@ -112,6 +113,10 @@
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            color_trs()
+        })
+
         onscroll = (event) => {
             let main_menu = document.getElementById('main_menu')
             if (window.scrollY > main_menu.scrollHeight) {
@@ -138,6 +143,15 @@
         function send_order_filter(e) {
             document.forms["orders_date"].submit();
             /*form.submit()*/
+        }
+
+        function color_trs() {
+            let rows = document.querySelectorAll('#order_tr')
+                for (let i = 0; i < rows.length; i++) {
+                    if (i % 2 === 0) {
+                        rows[i].style.background = 'rgba(0, 0, 0, 0.05)'
+                    }
+                }
         }
     </script>
 

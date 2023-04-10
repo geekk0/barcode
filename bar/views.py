@@ -45,7 +45,7 @@ def user_logout(request):
     request.user.set_unusable_password()
     logout(request)
 
-    return HttpResponseRedirect("/checklists")
+    return HttpResponseRedirect("/")
     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 

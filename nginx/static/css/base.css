@@ -25,6 +25,54 @@ body {
   color: rgb(77, 208, 225);
 }
 
+
+.orders_table th{
+  font-size: 13pt;
+  text-align: center !important;
+  font-weight: bold !important;
+}
+
+.orders_table {
+    border-collapse:separate;
+    padding: 0;
+    /*border-radius:6px;*/
+}
+
+.orders_table td{
+  text-align: center;
+  border-left: none;
+  border-bottom: none;
+}
+
+.orders_table th{
+  text-align: center;
+  border-left: none;
+  border-bottom: none;
+  border-top: none;
+}
+
+td, th {
+    border-left: solid 1px #585454;
+    border-top: solid 1px #585454;
+    border-radius: 0 !important;
+    text-align: center;
+}
+
+/*th {
+    border-top: none;
+    /*border-radius: 0 !important;
+}*/
+
+td:first-child, th:first-child {
+  border-left: none;
+  
+}
+
+th:last-child {
+  border-right: none;
+}
+
+
 .scrolled_menu {
   position: fixed;
   left: 15%;
