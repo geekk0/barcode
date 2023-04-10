@@ -100,7 +100,7 @@
                                 </div>
                             </td>
                             {% if order.status %}
-                                <td class="col-1" style="border-top: solid 1px #585454; border-right: none"><a style="color: green" href="{% url 'Заказ выполнен' order.id %}"><i class="fa-solid fa-check" style="font-size: 20pt"></i></a></td>
+                                <td class="col-1" style="border-top: solid 1px #585454; border-right: none"><a style="color: rgb(77, 208, 225)" href="{% url 'Заказ выполнен' order.id %}"><i class="fa-solid fa-check" style="font-size: 20pt"></i></a></td>
                             {% else %}
                                 <td class="col-1" style="border-top: solid 1px #585454; border-right: none"><p style="color: grey"><i class="fa-solid fa-check" style="font-size: 20pt"></i></p></td>
                             {% endif %}
